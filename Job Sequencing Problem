@@ -1,0 +1,46 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Comparator function to sort jobs by profit in descending order
+bool comparison(const vector<int> &a, const vector<int> &b) {
+    return a[2] > b[2]; 
+}
+
+vector<int> jobScheduling(vector<vector<int>> &jobs) {
+    int n = jobs.size();
+    
+    // Sort jobs based on their profit in descending order
+    sort(jobs.begin(), jobs.end(), comparison);
+
+    // Find the maximum deadline
+    int maxDeadline = 0;
+    for (int i = 0; i < n; i++) {
+        if (jobs[i][1] > maxDeadline) {
+            maxDeadline = jobs[i][1];
+        }
+    }
+
+    // Create a result array to keep track of free time slots
+    vector<int> result(maxDeadline + 1, -1);
+
+    int numJobs = 0;
+    int totalProfit = 0;
+
+    // Iterate through all given jobs
+    for (int i = 0; i < n; i++) {
+        // Find a free slot for this job (we start from the last possible slot)
+        for (int j = jobs[i][1]; j > 0; j--) {
+            // Free slot found
+            if (result[j] == -1) {
+                result[j] = i; // Assign this job to the slot
+                totalProfit += jobs[i][2];
+                numJobs++;
+                break;
+            }
+        }
+    }
+
+    return {numJobs, totalProfit};
+}
