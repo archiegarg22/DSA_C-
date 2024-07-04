@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+int max_shares(int k, int n, vector<int> &shares){
+    // Write your code here.
+
+     int ans = 0;
+    vector<vector<int>> days;
+    for(int i = 0; i < n; i++){
+        days.push_back({shares[i], i + 1});
+    }
+
+    // Sorting the days.
+    
+    sort(days.begin(), days.end());
+    for(int i = 0; i < n; i++){
+        if (k <= 0){
+            break;
+        }
+        ans += min(k / days[i][0], days[i][1]);
+        k -= min(k / days[i][0], days[i][1])*days[i][0];
+    }
+    return ans;
+
+}
