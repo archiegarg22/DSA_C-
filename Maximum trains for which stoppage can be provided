@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 
+bool comparison(vector<int> &a, vector<int> &b) {
+    return a[1] < b[1]; 
+}
+int maxStop(vector<vector<int>> &trains, int n, int m){
+    // Write your code here
+    sort( trains.begin() ,  trains.end() , comparison);
+
+   
+    // Array to track the last departure time for each platform
+    vector<int> platform(m, 0);
+
+    int ans = 0;
+
+    // Iterate through the sorted trains
+    for (int i = 0; i < n; i++) {
+        int platformNo = trains[i][2] - 1; // Platform number (0-based index)
+        int arrivalTime = trains[i][0];
+        int departureTime = trains[i][1];
+
+        // Check if the train can be scheduled on the platform
+        if (platform[platformNo] <= arrivalTime) {
+            platform[platformNo] = departureTime; // Update the last departure time for the platform
+            ans++; // Increment the count of trains that can stop
+        }
+    }
+
+    return ans;
+}
+
+
