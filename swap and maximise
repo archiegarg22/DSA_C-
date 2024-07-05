@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+int maxSum(vector<int> &arr, int n){
+	// Write your code here.
+	
+
+    sort(arr.begin(), arr.end());
+
+    vector <int> a(n);
+    int index = 0;
+
+    for (int i = 0; i < n / 2; i++) {
+        //first element is added
+    a[index++] = arr[i];
+    if (index < n) {
+        //last element is added
+        a[index++] = arr[n - i - 1];
+     }
+    }
+
+
+    //handling odd examples one element will be left add that
+    if (n % 2 != 0) {
+    a[index] = arr[n / 2];
+    }
+    
+    
+
+    int sum = 0;
+    for( int i = 1; i < n ;i++){
+        sum += abs( a[i] - a[i-1]);
+    }
+    sum += abs( a[n-1] - a[0]);
+
+    return sum;
+	
+}
+
