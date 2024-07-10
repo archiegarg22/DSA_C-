@@ -1,0 +1,34 @@
+int ht(Node *root){
+        if( root == NULL){
+            return 0;
+        }
+        
+        int leftht = ht(root->left);
+        int rightht = ht(root-> right);
+        
+        return 1 + max(leftht,rightht);
+        
+    }
+    bool isBalanced(Node *root){
+        //  Your Code here
+        if( root == NULL){
+            return true;
+        }
+        int leftht = ht(root->left);
+        int rightht= ht(root->right);
+        
+        if( abs(leftht - rightht) > 1){
+            return false;
+        }
+        
+        bool left = isBalanced(root-> left);
+        bool right = isBalanced(root-> right);
+        
+        if(! left || !right){
+            return false;
+        }
+        return true;
+        
+        
+        
+    }
