@@ -1,0 +1,69 @@
+vector<vector <int>> helper(Node* root){
+    	// Code here
+    	vector<vector<int>> result;
+    	if( root == NULL){
+    	    return result;
+    	}
+    	
+    	queue<Node *>pendingnodes;
+    	pendingnodes.push(root);
+    	bool lefttoright = true;
+    	
+    	while( !pendingnodes.empty()){
+    	    int size= pendingnodes.size();
+    	    //imp step next arr initialise it else segment error
+    	    vector<int> arr(size);
+    	    for( int i = 0; i < size; i++){
+    	        Node * first = pendingnodes.front();
+    	        pendingnodes.pop();  
+    	        
+    	        //to fill up L-R or R-L
+    	        int index = (lefttoright)? i : (size -1 - i);
+    	        arr[index]= first-> data;
+    	        
+    	        if(first->left){
+    	            pendingnodes.push(first->left);
+    	            
+    	        }
+    	        if(first->right){
+    	            pendingnodes.push(first->right);
+    	            
+    	        }
+    	        
+    	    }
+    	    //after one for loop
+    	    lefttoright = !lefttoright;
+    	    result.push_back(arr);
+    	}
+    	return result;
+    	
+    }
+    
+    /*vector<int> flat(vector<vector<int>>& result) {
+    vector<int> output;
+
+    for (int i = 0; i < result.size(); ++i) {
+        for (int j = 0; j < result[i].size(); ++j) {
+            output.push_back(result[i][j]);
+        }
+    }
+
+    return output;
+}*/
+
+    
+    
+    vector <int> zigZagTraversal(Node* root){
+         
+    vector<vector<int>> result = helper(root); // Get zigzag level order traversal
+    
+    vector<int> output; // Initialize output vector for flattened result
+    
+    for (int i = 0; i < result.size(); ++i) {
+        for (int j = 0; j < result[i].size(); ++j) {
+            output.push_back(result[i][j]); // Flatten each level into output vector
+        }
+    }
+    
+    return output;
+    }
