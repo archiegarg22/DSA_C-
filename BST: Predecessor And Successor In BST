@@ -1,0 +1,55 @@
+/*************************************************************
+
+    Following is the Binary Tree node structure
+    class TreeNode
+    {
+    public:
+        int data;
+        TreeNode *left, *right;
+        TreeNode() : data(0), left(NULL), right(NULL) {}
+        TreeNode(int x) : data(x), left(NULL), right(NULL) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : data(x), left(left), right(right) {}
+    };
+
+*************************************************************/
+
+pair<int, int> predecessorSuccessor(TreeNode *root, int key){
+    // Write your code here.
+    // brute force : make a vector store inorder trsversal and answer
+    //this is optimised
+
+    int predecessor = -1;
+    int successor = -1;
+
+    TreeNode *temp = root;
+
+    while (temp != NULL){
+        if (key > temp->data){
+            // Updating predecessor.
+            predecessor = temp->data;
+            temp = temp->right;
+        }
+        else{
+            temp = temp->left;
+        }
+    }
+
+    temp = root;
+
+    // Traversing in tree.
+    while (temp != NULL){
+        if (key >= temp->data){
+            temp = temp->right;
+        }
+        else{
+            // Updating successor.
+            successor = temp->data;
+            temp = temp->left;
+        }
+    }
+
+    return make_pair(predecessor, successor);
+    
+
+   
+
